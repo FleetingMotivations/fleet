@@ -7,6 +7,7 @@ namespace Fleet
 		public static void Main (string[] args)
 		{
 			Console.WriteLine ("Hello World!");
+			Console.ReadLine (); // Required for windows awfulness
 		}
 	}
 }

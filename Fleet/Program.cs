@@ -2,6 +2,7 @@
 using log4net;
 using Fleet.AppHaulerCore.UI;
 using Fleet.Application;
+using Fleet.Lattice;
 
 namespace Fleet
 {
@@ -13,6 +14,9 @@ namespace Fleet
 		{
 			log4net.Config.XmlConfigurator.Configure();
 			Logger.Error ("Oh no");
+
+			LatticeWorkstation workstation = new LatticeWorkstation ();
+			workstation.RegisterService ();
 
 			Console.WriteLine ("Hello World!");
 			Console.ReadLine (); // Required for windows awfulness

@@ -1,3 +1,3 @@
 # fleet
 # Build status badge
-https://travis-ci.org/FleetingMotivations/fleet.svg?branch=develop
+[![Build Status](https://travis-ci.org/FleetingMotivations/fleet.svg?branch=develop)](https://travis-ci.org/FleetingMotivations/fleet)

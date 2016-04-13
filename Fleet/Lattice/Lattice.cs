@@ -1,8 +1,26 @@
 ﻿using System;
 using Mono.Zeroconf;
+using System.Runtime.Remoting.Channels.Tcp;
+using System.Runtime.Remoting.Channels;
+using System.Runtime.Remoting;
 
 namespace Fleet.Lattice {
-	public class LatticeWorkstation {
+	public class LatticeManager {
+
+		//	==	==	==
+		// Logger	==
+		//	==	==	==
+
+
+
+		//	==	==	==	==	==
+		//	Shared Instance	==
+		//	==	==	==	==	==
+
+		private static LatticeManager _sharedInstance;
+		public static LatticeManager SharedInstance {
+			get { return _sharedInstance; }
+		}
 
 		//	==	==	==
 		//	Members	==
@@ -15,16 +33,21 @@ namespace Fleet.Lattice {
 		// Zeroconf Service
 		private IRegisterService zeroconfService;
 
+		// Remoting Channel
+		private TcpChannel remotingChannel;
+
 		//	==	==	==	==
 		// 	Constructor	==
 		//	==	==	==	==
 
-		public LatticeWorkstation (String serviceName = "Fleet Workstation", Int16 port = 8080) {
+		private LatticeManager (String serviceName = "Fleet Workstation", Int16 port = 8080) {
 			this.ServiceName = serviceName;
 			this.Port = port;
+
+			_sharedInstance = this;
 		}
 
-		~LatticeWorkstation () {
+		~LatticeManager () {
 			if (this.zeroconfService != null)
 				this.zeroconfService.Dispose ();
 		}
@@ -33,7 +56,7 @@ namespace Fleet.Lattice {
 		//	Zeroconf Management	==
 		//	==	==	==	==	==	==
 
-		public Boolean RegisterService() {
+		public Boolean RegisterZeroconfService() {
 
 			if (this.zeroconfService == null) {
 				var service = new RegisterService ();
@@ -51,7 +74,7 @@ namespace Fleet.Lattice {
 			return false;
 		}
 
-		public Boolean DeregisterService() {
+		public Boolean DeregisterZeroconfService() {
 			if (this.zeroconfService != null) {
 				this.zeroconfService.Dispose ();
 				this.zeroconfService = null;
@@ -64,6 +87,41 @@ namespace Fleet.Lattice {
 		//	Remoting Management	==
 		//	==	==	==	==	==	==
 
+		public Boolean RegisterRemotingService(Boolean secure = false) {
+
+			if (this.remotingChannel == null) {
+				var channel = new TcpChannel (this.Port);
+				var interfaceType = Type.GetType (ILatticeCommunicator);
+
+				ChannelServices.RegisterChannel (channel, secure);
+				RemotingConfiguration.RegisterWellKnownServiceType (interfaceType, "LatticeCommuicator", WellKnownObjectMode.SingleCall);
+
+				this.remotingChannel = channel;
+			}
+
+			return false;
+		}
+
+		public Boolean DeregisterRemotingService() {
+
+			if (this.remotingChannel != null) {
+				ChannelServices.UnregisterChannel (this.remotingChannel);
+				this.remotingChannel = null;
+			}
+
+			return false;
+		}
+	}
+
+	//	==	==	==	==	==
+	//	Remoting Object	==
+	//	==	==	==	==	==
+
+	public interface ILatticeCommunicator {
+
+	}
+
+	internal class LatticeCommunicator: ILatticeCommunicator {
 
 	}
 }

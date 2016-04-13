@@ -12,18 +12,29 @@ namespace Fleet
 
 		public static void Main (string[] args)
 		{
-			log4net.Config.XmlConfigurator.Configure();
+			log4net.Config.XmlConfigurator.Configure ();
 			Logger.Error ("Oh no");
 
-			LatticeManager workstation = new LatticeManager();
-			workstation.RegisterZeroconfService ();
+			Int16 port = 8080;
 
-			Console.WriteLine ("Hello World!");
+			if (args.Length == 1)
+				port = Convert.ToInt16(args[0]);
+
+			LatticeServiceManager workstation = new LatticeServiceManager ("Lattice Workstation", port);
+			workstation.RegisterZeroconfService ();
+			workstation.RegisterRemotingService ();
+
+			Console.WriteLine ("Broadcasting Service. Press enter to consume service.");
 			Console.ReadLine (); // Required for windows awfulness
 
 
             var app = new FleetApplication();
             app.Run();
+			Console.WriteLine ("Bowsing Service");
+			LatticeServiceDiscovery discovery = new LatticeServiceDiscovery ();
+			discovery.doBrowsing ();
+
+			Console.ReadLine ();
 		}
 	
         public int killAllHumans(){

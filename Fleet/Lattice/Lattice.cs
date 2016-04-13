@@ -3,15 +3,24 @@ using Mono.Zeroconf;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting;
+using log4net;
+using System.Drawing;
 
 namespace Fleet.Lattice {
-	public class LatticeManager {
+	public class LatticeServiceManager {
 
 		//	==	==	==
 		// Logger	==
 		//	==	==	==
 
-
+		private static ILog _logger;
+		private static ILog Logger {
+			get {
+				if (_logger == null)
+					_logger = LogManager.GetLogger (System.Reflection.MethodBase.GetCurrentMethod ().DeclaringType);
+				return _logger;
+			}
+		}
 
 		//	==	==	==
 		//	Members	==
@@ -31,12 +40,12 @@ namespace Fleet.Lattice {
 		// 	Constructor	==
 		//	==	==	==	==
 
-		public LatticeManager (String serviceName = "Fleet Workstation", Int16 port = 8080) {
+		public LatticeServiceManager (String serviceName = "Fleet Workstation", Int16 port = 8080) {
 			this.ServiceName = serviceName;
 			this.Port = port;
 		}
 
-		~LatticeManager () {
+		~LatticeServiceManager () {
 			if (this.zeroconfService != null)
 				this.zeroconfService.Dispose ();
 		}
@@ -54,6 +63,9 @@ namespace Fleet.Lattice {
 				service.RegType 	= "_lattice._tcp";
 				service.ReplyDomain = "local.";
 				service.Port 		= this.Port;
+
+				//service.TxtRecord = new TxtRecord ();
+
 				service.Register ();
 
 				this.zeroconfService = service;
@@ -80,10 +92,13 @@ namespace Fleet.Lattice {
 
 			if (this.remotingChannel == null) {
 				var channel = new TcpChannel (this.Port);
-				var interfaceType = Type.GetType ("Fleet.Lattice.ILatticeCommunicator");
+				var interfaceType = Type.GetType ("Fleet.Lattice.LatticeCommunicator");
 
 				ChannelServices.RegisterChannel (channel, secure);
-				RemotingConfiguration.RegisterWellKnownServiceType (interfaceType, "LatticeCommuicator", WellKnownObjectMode.SingleCall);
+				RemotingConfiguration.RegisterWellKnownServiceType (interfaceType, "LatticeCommunicator", WellKnownObjectMode.SingleCall);
+
+				var record = new TxtRecordItem ("Lattice_ServiceName", "LatticeCommunicator");
+				this.zeroconfService.TxtRecord?.Add (record);
 
 				this.remotingChannel = channel;
 			}
@@ -107,10 +122,62 @@ namespace Fleet.Lattice {
 	//	==	==	==	==	==
 
 	public interface ILatticeCommunicator {
+		Boolean ShareImage (Image img);
+		Boolean ShareString (String str);
+	}
+
+	internal class LatticeCommunicator: MarshalByRefObject, ILatticeCommunicator {
+
+		public Boolean ShareImage (Image img) {
+
+			Console.WriteLine ("Received Image: " + img);
+
+			return true;
+		}
+
+		public Boolean ShareString(String text) {
+
+			Console.WriteLine ("Received Text: " + text);
+
+			return true;
+		}
 
 	}
 
-	internal class LatticeCommunicator: ILatticeCommunicator {
+	//	==	==	==	==	==	==
+	//	Service Discovery	==
+	//	==	==	==	==	==	==
 
+	public class LatticeServiceDiscovery {
+
+		public void doBrowsing() {
+			var browser = new ServiceBrowser ();
+
+			browser.ServiceAdded += OnServiceAdded;
+
+			browser.Browse ("_lattice._tcp", "local");
+		}
+
+		private void OnServiceAdded (Object o, ServiceBrowseEventArgs args) {
+			var service = args.Service;
+			Console.WriteLine ("Resolved Service: " + service.FullName);
+
+			service.Resolved += OnServiceResolved;
+
+			service.Resolve ();
+		}
+
+		private void OnServiceResolved(Object o, ServiceResolvedEventArgs args) {
+			var service = args.Service;
+			Int16  port = service.Port;
+			String host = service.HostEntry.AddressList [0].ToString ();
+
+			Console.WriteLine ("Resolved Service: {0} - {1}:{2} ({3} Text Record(s))", service.FullName, host, port, service.TxtRecord.Count);
+
+			Type comType = Type.GetType ("Fleet.Lattice.ILatticeCommunicator");
+			ILatticeCommunicator communicator = (ILatticeCommunicator)Activator.GetObject (comType, "tcp://" + host + ":" + port + "/LatticeCommunicator");
+
+			communicator.ShareString ("Hello World");
+		}
 	}
 }

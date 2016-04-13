@@ -1,0 +1,25 @@
+<<<<<<< HEAD
+﻿<Properties StartupItem="Fleet\Fleet.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="FleetUI\ScreenCaptureSelector.cs">
+    <Files>
+      <File FileName="Fleet\AppHaulerCore\UI\AppHaulerSidebar.cs" Line="1" Column="1" />
+      <File FileName="FleetUI\Program.cs" Line="1" Column="1" />
+      <File FileName="FleetUI\MainWindow.cs" Line="1" Column="1" />
+      <File FileName="FleetUI\ScreenCaptureSelector.cs" Line="22" Column="1" />
+=======
+﻿<Properties StartupItem="Fleet/Fleet.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Fleet/Lattice/Lattice.cs">
+    <Files>
+      <File FileName="Fleet/Lattice/Lattice.cs" Line="29" Column="14" />
+      <File FileName="Fleet/Program.cs" Line="10" Column="14" />
+      <File FileName="Mono.Zeroconf-master/src/Mono.Zeroconf.Providers.Bonjour/Mono.Zeroconf.Providers.Bonjour/RegisterService.cs" Line="81" Column="30" />
+>>>>>>> Minor Changes
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

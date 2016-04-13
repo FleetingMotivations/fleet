@@ -5,6 +5,10 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting;
 using log4net;
 using System.Drawing;
+using System.Windows.Forms;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections;
 
 namespace Fleet.Lattice {
 	public class LatticeServiceManager {
@@ -91,7 +95,12 @@ namespace Fleet.Lattice {
 		public Boolean RegisterRemotingService(Boolean secure = false) {
 
 			if (this.remotingChannel == null) {
-				var channel = new TcpChannel (this.Port);
+				var provider = new BinaryServerFormatterSinkProvider ();
+				provider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
+				var props = new Hashtable ();
+				props ["port"] = this.Port;
+
+				var channel = new TcpChannel (props, null, provider);
 				var interfaceType = Type.GetType ("Fleet.Lattice.LatticeCommunicator");
 
 				ChannelServices.RegisterChannel (channel, secure);
@@ -124,6 +133,7 @@ namespace Fleet.Lattice {
 	public interface ILatticeCommunicator {
 		Boolean ShareImage (Image img);
 		Boolean ShareString (String str);
+		Boolean ShareStream (Stream stream);
 	}
 
 	internal class LatticeCommunicator: MarshalByRefObject, ILatticeCommunicator {
@@ -138,6 +148,13 @@ namespace Fleet.Lattice {
 		public Boolean ShareString(String text) {
 
 			Console.WriteLine ("Received Text: " + text);
+
+			return true;
+		}
+
+		public Boolean ShareStream (Stream stream) {
+
+			Console.WriteLine ("Received Stream: " + stream);
 
 			return true;
 		}
@@ -178,6 +195,13 @@ namespace Fleet.Lattice {
 			ILatticeCommunicator communicator = (ILatticeCommunicator)Activator.GetObject (comType, "tcp://" + host + ":" + port + "/LatticeCommunicator");
 
 			communicator.ShareString ("Hello World");
+
+			var dialog = new OpenFileDialog ();
+			dialog.ShowDialog ();
+			var filename = dialog.FileName;
+
+			var img = Image.FromFile (filename);
+			communicator.ShareImage (img);
 		}
 	}
 }

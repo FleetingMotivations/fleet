@@ -13,15 +13,6 @@ namespace Fleet.Lattice {
 
 
 
-		//	==	==	==	==	==
-		//	Shared Instance	==
-		//	==	==	==	==	==
-
-		private static LatticeManager _sharedInstance;
-		public static LatticeManager SharedInstance {
-			get { return _sharedInstance; }
-		}
-
 		//	==	==	==
 		//	Members	==
 		//	==	==	==
@@ -40,11 +31,9 @@ namespace Fleet.Lattice {
 		// 	Constructor	==
 		//	==	==	==	==
 
-		private LatticeManager (String serviceName = "Fleet Workstation", Int16 port = 8080) {
+		public LatticeManager (String serviceName = "Fleet Workstation", Int16 port = 8080) {
 			this.ServiceName = serviceName;
 			this.Port = port;
-
-			_sharedInstance = this;
 		}
 
 		~LatticeManager () {
@@ -91,7 +80,7 @@ namespace Fleet.Lattice {
 
 			if (this.remotingChannel == null) {
 				var channel = new TcpChannel (this.Port);
-				var interfaceType = Type.GetType (ILatticeCommunicator);
+				var interfaceType = Type.GetType ("Fleet.Lattice.ILatticeCommunicator");
 
 				ChannelServices.RegisterChannel (channel, secure);
 				RemotingConfiguration.RegisterWellKnownServiceType (interfaceType, "LatticeCommuicator", WellKnownObjectMode.SingleCall);

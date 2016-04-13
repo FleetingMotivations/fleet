@@ -15,10 +15,7 @@ namespace Fleet
 			log4net.Config.XmlConfigurator.Configure();
 			Logger.Error ("Oh no");
 
-			LatticeWorkstation workstation = new LatticeWorkstation ();
-			workstation.RegisterService ();
-
-			LatticeManager workstation = new LatticeManager ();
+			LatticeManager workstation = new LatticeManager();
 			workstation.RegisterZeroconfService ();
 
 			Console.WriteLine ("Hello World!");

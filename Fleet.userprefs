@@ -1,1 +1,12 @@
-﻿<Properties StartupItem="Fleet/Fleet.csproj" />
+﻿<Properties StartupItem="Fleet\Fleet.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Fleet\AppHaulerCore\UI\AppHaulerSidebar.cs">
+    <Files>
+      <File FileName="Fleet\AppHaulerCore\UI\AppHaulerSidebar.cs" Line="46" Column="3" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

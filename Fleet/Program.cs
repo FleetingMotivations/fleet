@@ -20,7 +20,7 @@ namespace Fleet
 			if (args.Length == 1)
 				port = Convert.ToInt16(args[0]);
 
-			LatticeServiceManager workstation = new LatticeServiceManager ("Lattice Workstation", port);
+			var workstation = new LatticeServiceManager ("Lattice Workstation", port);
 			workstation.RegisterZeroconfService ();
 			workstation.RegisterRemotingService ();
 
@@ -31,8 +31,8 @@ namespace Fleet
             var app = new FleetApplication();
             app.Run();
 			Console.WriteLine ("Bowsing Service");
-			LatticeServiceDiscovery discovery = new LatticeServiceDiscovery ();
-			discovery.doBrowsing ();
+			var discovery = new LatticeDiscovery ();
+			discovery.DoBrowsing ();
 
 			Console.ReadLine ();
 		}

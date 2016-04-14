@@ -107,6 +107,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Lattice\Lattice.cs" />
+    <Compile Include="Lattice\LatticeRemoting.cs" />
+    <Compile Include="Lattice\LatticeDiscovery.cs" />
+    <Compile Include="Lattice\LatticeManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

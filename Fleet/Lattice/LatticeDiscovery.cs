@@ -33,14 +33,14 @@ namespace Fleet.Lattice {
 		//	Members	==
 		//	==	==	==
 
-		private IDictionary<String, ServiceRecord> records;
+		private IDictionary<IService, ServiceRecord> records;
 		private ServiceBrowser browser;
 		private Object @lock = new Object ();
 
-		public IReadOnlyDictionary<String, ServiceRecord> CurrentRecords {
+		public IReadOnlyDictionary<IService, ServiceRecord> CurrentRecords {
 			get {
 				lock (@lock) {
-					return new ReadOnlyDictionary<String, ServiceRecord> (this.records);
+					return new ReadOnlyDictionary<IService, ServiceRecord> (this.records);
 				}
 			}
 		}
@@ -50,7 +50,7 @@ namespace Fleet.Lattice {
 		//	==	==	==	==
 
 		public LatticeServiceDiscovery () {
-			this.records = new Dictionary<String, ServiceRecord> ();
+			this.records = new Dictionary<IService, ServiceRecord> ();
 		}
 
 		~LatticeServiceDiscovery () {
@@ -96,16 +96,22 @@ namespace Fleet.Lattice {
 			
 		private void OnServiceAdded (Object o, ServiceBrowseEventArgs args) {
 			var service = args.Service;
+			service.Resolved += OnServiceResolve;
+			service.Resolve ();
+		}
+
+		private void OnServiceResolve (Object o, ServiceResolvedEventArgs args) {
+			var service = args.Service;
 			var record = new ServiceRecord ();
 
 			record.Hostname = service.HostEntry.AddressList[0].ToString ();
 			record.Port = service.Port;
 			record.ServiceName = service.Name;
 
-			var key = record.Hostname + ":" + record.Port;
+			//var key = record.Hostname + ":" + record.Port;
 
 			lock (@lock) {
-				this.records [key] = record;
+				this.records [service] = record;
 			}
 
 			Logger.Debug ("Added Service: " + record);
@@ -113,16 +119,16 @@ namespace Fleet.Lattice {
 
 		private void OnServiceRemoved (Object o, ServiceBrowseEventArgs args) {
 
-			var hostname = args.Service.HostEntry.AddressList [0].ToString ();
-			var port = args.Service.Port;
+			//var hostname = args.Service.HostEntry.AddressList [0].ToString ();
+			//var port = args.Service.Port;
 
-			var key = hostname + ":" + port;
+			//var key = hostname + ":" + port;
 
 			lock (@lock) {
-				var record = this.records [key];
-				Logger.Debug ("Removed Service: " + record);
+				//var record = this.records [arg];
+				//Logger.Debug ("Removed Service: " + record);
 
-				this.records.Remove (key);
+				this.records.Remove (args.Service);
 			}
 		}
 	}

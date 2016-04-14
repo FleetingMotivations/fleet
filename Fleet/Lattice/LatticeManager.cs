@@ -64,8 +64,6 @@ namespace Fleet.Lattice {
 				service.ReplyDomain = replydomain;
 				service.Port 		= this.Port;
 
-				//service.TxtRecord = new TxtRecord ();
-
 				service.Register ();
 
 				this.zeroconfService = service;

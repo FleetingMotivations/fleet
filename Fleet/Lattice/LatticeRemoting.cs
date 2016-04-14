@@ -15,9 +15,17 @@ namespace Fleet.Lattice {
 
 	internal class LatticeCommunicator: MarshalByRefObject, ILatticeCommunicator {
 
+		public delegate void ReceiveDelegate (Object o, EventArgs args);
+
+		public static event ReceiveDelegate DidReceiveImage;
+		public static event ReceiveDelegate DidReceiveString;
+		public static event ReceiveDelegate DidReceiveStream;
+
 		public Boolean ShareImage (Image img) {
 
 			Console.WriteLine ("Received Image: " + img);
+
+			DidReceiveImage (img, null);
 
 			return true;
 		}
@@ -26,12 +34,16 @@ namespace Fleet.Lattice {
 
 			Console.WriteLine ("Received Text: " + text);
 
+			DidReceiveString (text, null);
+
 			return true;
 		}
 
 		public Boolean ShareStream (Stream stream) {
 
 			Console.WriteLine ("Received Stream: " + stream);
+
+			DidReceiveStream (stream, null);
 
 			return true;
 		}

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿<Properties StartupItem="Fleet\Fleet.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="FleetUI\ScreenCaptureSelector.cs">
@@ -9,6 +10,9 @@
       <File FileName="FleetUI\ScreenCaptureSelector.cs" Line="22" Column="1" />
 =======
 ﻿<Properties StartupItem="Fleet/Fleet.csproj">
+=======
+﻿<Properties StartupItem="Lattice.Test/Lattice.Test.csproj">
+>>>>>>> Changes in recoding services to stop exceptions.
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Fleet/Lattice/Lattice.cs">
     <Files>

@@ -1,2 +1,8 @@
 language: csharp
 solution: Fleet.sln
+install:
+  - nuget restore Fleet.sln
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Debug Fleet.sln
+  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./Testing/bin/Debug/Testing.dll

@@ -21,6 +21,8 @@ namespace Fleet.AppHaulerCore.UI
         {
             sidebarWindow = new Window("AppHauler");
             sidebarWindow.Resize(200,200); // Read from configuration
+            sidebarWindow.Decorated = false; // Turns of the window border and standard controls
+            sidebarWindow.Opacity = 0.5;
 
             // Create a demo label
             var label = new Label("Test Label");

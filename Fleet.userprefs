@@ -4,6 +4,21 @@
     <Files>
       <File FileName="Fleet\AppHaulerCore\UI\AppHaulerSidebar.cs" Line="46" Column="3" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Fleet" expanded="True">
+            <Node name="Fleet" expanded="True">
+              <Node name="AppHaulerCore" expanded="True">
+                <Node name="UI" expanded="True">
+                  <Node name="AppHaulerSidebar.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

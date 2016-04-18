@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Fleet.Lattice;
 
 namespace Lattice.Test
@@ -114,7 +115,45 @@ namespace Lattice.Test
 		}
 
 		private static void SendText () {
+			Console.WriteLine ("** Send Text **");
 
+			Console.WriteLine ("Please enter a line of text to send");
+			Console.Write ("--> ");
+
+			String text = Console.ReadLine ();
+
+			Console.WriteLine ();
+			Console.WriteLine ("Please select a service out of the following list");
+			PrintResolvedServices ();
+
+			String serviceInput = Console.ReadLine ();
+			Int16 serviceIndex = Convert.ToInt16 (serviceInput);
+
+			var services = discovery.CurrentRecords;
+			if (serviceIndex >= services.Count) {
+				Console.WriteLine ("That is not a valid input");
+				return;
+			}
+
+			ServiceRecord service;
+			Int16 counter = 0;
+
+			foreach (var record in services) {
+				if (counter == serviceIndex) {
+					service = record.Value;
+				}
+				counter++;
+			}
+
+			Type comType = Type.GetType ("Fleet.Lattice.ILatticeCommunicator");
+
+			ILatticeCommunicator communicator = (ILatticeCommunicator) Activator.GetObject (comType, "tcp://" + service.Hostname + ":" + service.Port + "/LatticeCommunicator");
+
+			Console.WriteLine ("Sending to service " + service);
+
+			communicator.ShareString (text);
+			
+			Console.WriteLine ();
 		}
 
 		private static void SendImage () {
@@ -127,9 +166,10 @@ namespace Lattice.Test
 			if (discovery != null) {
 				var services = discovery.CurrentRecords;
 
+				Int16 i = 0;
 				foreach (var recordpair in services) {
 					var record = recordpair.Value;
-					Console.WriteLine (record.ToString ());
+					Console.WriteLine (i++ + " - " + record.ToString ());
 				}
 
 			} else {

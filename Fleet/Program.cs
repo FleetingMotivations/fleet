@@ -3,7 +3,7 @@ using log4net;
 
 namespace Fleet
 {
-	class MainClass
+	public class MainClass
 	{
 		private static ILog Logger {
 			get {
@@ -20,5 +20,9 @@ namespace Fleet
 			Console.WriteLine ("Hello World!");
 			Console.ReadLine (); // Required for windows awfulness
 		}
-	}
+	
+        public int killAllHumans(){
+            return new System.Random().Next();
+        }
+    }
 }

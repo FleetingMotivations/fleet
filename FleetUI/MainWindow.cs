@@ -8,11 +8,14 @@ public partial class MainWindow: Gtk.Window
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
+	    this.Opacity = 0.79;
+	    this.Decorated = false;
+        this.Fullscreen();
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
-		Application.Quit ();
+	    Application.Quit ();
 		a.RetVal = true;
 	}
 
@@ -57,4 +60,8 @@ public partial class MainWindow: Gtk.Window
 		throw new NotImplementedException ();
 	}
 
+	protected void OnCaptureDesktop (object sender, EventArgs e)
+	{
+		throw new NotImplementedException ();
+	}
 }

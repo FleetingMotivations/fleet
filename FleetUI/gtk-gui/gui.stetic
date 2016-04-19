@@ -7,7 +7,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/FleetUI.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="448 300">
+  <widget class="Gtk.Window" id="MainWindow" design-size="499 300">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -32,6 +32,22 @@
         <property name="ShortLabel" translatable="yes">Exit</property>
         <signal name="Activated" handler="OnExit" />
       </action>
+      <action id="CaptureAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Capture</property>
+        <property name="ShortLabel" translatable="yes">Capture</property>
+      </action>
+      <action id="DesktopAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Desktop</property>
+        <property name="ShortLabel" translatable="yes">Desktop</property>
+        <signal name="Activated" handler="OnCaptureDesktop" />
+      </action>
+      <action id="PortionAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Portion</property>
+        <property name="ShortLabel" translatable="yes">Portion</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -51,6 +67,10 @@
                 <node type="Separator" />
                 <node type="Menuitem" action="ExitAction" />
               </node>
+              <node type="Menu" action="CaptureAction">
+                <node type="Menuitem" action="DesktopAction" />
+                <node type="Menuitem" action="PortionAction" />
+              </node>
             </node>
           </widget>
           <packing>
@@ -63,10 +83,9 @@
         <child>
           <widget class="Gtk.Image" id="displayImage">
             <property name="MemberName" />
-            <property name="WidthRequest">100</property>
-            <property name="HeightRequest">200</property>
           </widget>
           <packing>
+            <property name="PackType">End</property>
             <property name="Position">1</property>
             <property name="AutoSize">True</property>
             <property name="Expand">False</property>

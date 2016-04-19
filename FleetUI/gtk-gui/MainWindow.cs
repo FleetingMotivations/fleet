@@ -13,6 +13,12 @@ public partial class MainWindow
 	
 	private global::Gtk.Action ExitAction;
 	
+	private global::Gtk.Action CaptureAction;
+	
+	private global::Gtk.Action DesktopAction;
+	
+	private global::Gtk.Action PortionAction;
+	
 	private global::Gtk.VBox vbox1;
 	
 	private global::Gtk.MenuBar menubar1;
@@ -37,6 +43,15 @@ public partial class MainWindow
 		this.ExitAction = new global::Gtk.Action ("ExitAction", global::Mono.Unix.Catalog.GetString ("Exit"), null, null);
 		this.ExitAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Exit");
 		w1.Add (this.ExitAction, null);
+		this.CaptureAction = new global::Gtk.Action ("CaptureAction", global::Mono.Unix.Catalog.GetString ("Capture"), null, null);
+		this.CaptureAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Capture");
+		w1.Add (this.CaptureAction, null);
+		this.DesktopAction = new global::Gtk.Action ("DesktopAction", global::Mono.Unix.Catalog.GetString ("Desktop"), null, null);
+		this.DesktopAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Desktop");
+		w1.Add (this.DesktopAction, null);
+		this.PortionAction = new global::Gtk.Action ("PortionAction", global::Mono.Unix.Catalog.GetString ("Portion"), null, null);
+		this.PortionAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Portion");
+		w1.Add (this.PortionAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -47,7 +62,7 @@ public partial class MainWindow
 		this.vbox1.Name = "vbox1";
 		this.vbox1.Spacing = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString (@"<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='OpenAction' action='OpenAction'/><menuitem name='AboutAction' action='AboutAction'/><separator/><menuitem name='ExitAction' action='ExitAction'/></menu></menubar></ui>");
+		this.UIManager.AddUiFromString (@"<ui><menubar name='menubar1'><menu name='FileAction' action='FileAction'><menuitem name='OpenAction' action='OpenAction'/><menuitem name='AboutAction' action='AboutAction'/><separator/><menuitem name='ExitAction' action='ExitAction'/></menu><menu name='CaptureAction' action='CaptureAction'><menuitem name='DesktopAction' action='DesktopAction'/><menuitem name='PortionAction' action='PortionAction'/></menu></menubar></ui>");
 		this.menubar1 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar1")));
 		this.menubar1.Name = "menubar1";
 		this.vbox1.Add (this.menubar1);
@@ -68,12 +83,14 @@ public partial class MainWindow
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 448;
+		this.DefaultWidth = 499;
 		this.DefaultHeight = 300;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.OpenAction.Activated += new global::System.EventHandler (this.OnOpen);
 		this.AboutAction.Activated += new global::System.EventHandler (this.OnAbout);
 		this.ExitAction.Activated += new global::System.EventHandler (this.OnExit);
+		this.DesktopAction.Activated += new global::System.EventHandler (this.OnCaptureDesktop);
+		this.PortionAction.Activated += new global::System.EventHandler (this.OnPortion);
 	}
 }

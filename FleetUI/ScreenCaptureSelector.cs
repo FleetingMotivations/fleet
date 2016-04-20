@@ -24,9 +24,11 @@ namespace FleetUI
 		        {
 		            TouchdownComplete = true;
 		            TouchdownCoords = new Tuple<double, double>(args.Event.XRoot, args.Event.YRoot);
+                    Console.WriteLine("Touchdown Point: " + TouchdownCoords);
 		        }
 		        else
 		        {
+                    Console.WriteLine("Complete Coords: " + new Tuple<double, double>(args.Event.XRoot, args.Event.YRoot));
 		            Callback(new ScreenCaptureCoords
 		            {
 		                TouchdownX = (int)TouchdownCoords.Item1,

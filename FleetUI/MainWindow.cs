@@ -75,15 +75,30 @@ public partial class MainWindow: Gtk.Window
         CaptureScreenSection(0, 0, screen.X, screen.Y);
     }
 
-	private void CaptureScreenSection(int x, int y, int width, int height) 
+	private void CaptureScreenSection(int x1, int y1, int x2, int y2)
 	{
-	    using (var screenCapture = new Bitmap(width, height))
+
+	    var temp = 0;
+	    if (x1 > x2)
+	    {
+	        temp = x2;
+	        x2 = x1;
+	        x1 = temp;
+	    }
+	    if (y1 > y2)
+	    {
+            temp = y2;
+            y2 = y1;
+            y1 = temp;    
+	    }
+	   
+	    using (var screenCapture = new Bitmap(x2 - x1, y2 - y1))
 	    {
 	        using (var graphics = Graphics.FromImage(screenCapture))
 	        {
                 // Copy the image from the screen
-                graphics.CopyFromScreen(width, height,
-                    x, y,
+                graphics.CopyFromScreen(x1, y1,
+                    0, 0,
                     screenCapture.Size,
                     CopyPixelOperation.SourceCopy);
 
@@ -107,10 +122,13 @@ public partial class MainWindow: Gtk.Window
         // Hide the main application
         this.Hide();
         // Throw up fullscreen overlay
-		var capSelector = new FleetUI.ScreenCaptureSelector(delegate(ScreenCaptureSelector.ScreenCaptureCoords coords)
+		var capSelector = new ScreenCaptureSelector(delegate(ScreenCaptureSelector.ScreenCaptureCoords coords)
 		{
-		    CaptureScreenSection(coords.TouchdownX, coords.TouchdownY, coords.CompleteX, coords.CompleteY);
-            this.Show();
+		    CaptureScreenSection(coords.TouchdownX, 
+                coords.TouchdownY, 
+                coords.CompleteX, 
+                coords.CompleteY);
+            Show();
 		    return true;
 		});
 

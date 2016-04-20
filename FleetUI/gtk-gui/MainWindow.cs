@@ -55,8 +55,9 @@ public partial class MainWindow
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
-		this.Title = global::Mono.Unix.Catalog.GetString ("MainWindow");
+		this.Title = global::Mono.Unix.Catalog.GetString ("Capture");
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+		this.Modal = true;
 		// Container child MainWindow.Gtk.Container+ContainerChild
 		this.vbox1 = new global::Gtk.VBox ();
 		this.vbox1.Name = "vbox1";
@@ -73,12 +74,11 @@ public partial class MainWindow
 		// Container child vbox1.Gtk.Box+BoxChild
 		this.displayImage = new global::Gtk.Image ();
 		this.displayImage.Name = "displayImage";
+		this.displayImage.Yalign = 0F;
 		this.vbox1.Add (this.displayImage);
 		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.displayImage]));
 		w3.PackType = ((global::Gtk.PackType)(1));
 		w3.Position = 1;
-		w3.Expand = false;
-		w3.Fill = false;
 		this.Add (this.vbox1);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();

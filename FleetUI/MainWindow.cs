@@ -72,13 +72,13 @@ public partial class MainWindow: Gtk.Window
     protected void OnCaptureDesktop(object sender, EventArgs e)
     {
 	    var screen = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea;
-        CaptureScreenSection(0, 0, screen.X, screen.Y);
+        CaptureScreenSection(0, 0, screen.Width, screen.Height);
     }
 
 	private void CaptureScreenSection(int x1, int y1, int x2, int y2)
 	{
 
-	    var temp = 0;
+	    int temp;
 	    if (x1 > x2)
 	    {
 	        temp = x2;
@@ -91,8 +91,9 @@ public partial class MainWindow: Gtk.Window
             y2 = y1;
             y1 = temp;    
 	    }
-	   
-	    using (var screenCapture = new Bitmap(x2 - x1, y2 - y1))
+	    var xWidth = x2 - x1;
+	    var yWidth = y2 - y1;
+	    using (var screenCapture = new Bitmap(xWidth, yWidth))
 	    {
 	        using (var graphics = Graphics.FromImage(screenCapture))
 	        {
@@ -109,6 +110,7 @@ public partial class MainWindow: Gtk.Window
                 this.DisplayImage(new Pixbuf(bitStream));
 	        }
 	    }
+        this.Resize(10, 10);
 	}
 
     private void DisplayImage(Pixbuf buffer)

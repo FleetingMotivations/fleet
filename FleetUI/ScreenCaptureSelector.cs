@@ -28,6 +28,7 @@ namespace FleetUI
 		        }
 		        else
 		        {
+                    this.Hide();
                     Console.WriteLine("Complete Coords: " + new Tuple<double, double>(args.Event.XRoot, args.Event.YRoot));
 		            Callback(new ScreenCaptureCoords
 		            {

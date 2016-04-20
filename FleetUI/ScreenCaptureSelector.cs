@@ -7,7 +7,7 @@ namespace FleetUI
 {
 	public partial class ScreenCaptureSelector : Gtk.Window
 	{
-		public ScreenCaptureSelector (System.Func<Tuple<double, double, double, double>, bool> callback) 
+		public ScreenCaptureSelector (Func<ScreenCaptureCoords, bool> callback) 
             : base (Gtk.WindowType.Toplevel)
 		{
 			this.Build ();
@@ -23,21 +23,20 @@ namespace FleetUI
 		        if (!TouchdownComplete)
 		        {
 		            TouchdownComplete = true;
-		            TouchdownCoords = new Tuple<double, double>(args.Event.X, args.Event.Y);
+		            TouchdownCoords = new Tuple<double, double>(args.Event.XRoot, args.Event.YRoot);
 		        }
 		        else
 		        {
-		            CompleteCoords = new Tuple<double, double>(args.Event.X, args.Event.Y);
-                    // TODO: Deal with result
-		            Callback(new Tuple<double, double, double, double>(
-                        TouchdownCoords.Item1, 
-                        TouchdownCoords.Item2,
-                        CompleteCoords.Item1,
-                        CompleteCoords.Item2));
+		            Callback(new ScreenCaptureCoords
+		            {
+		                TouchdownX = (int)TouchdownCoords.Item1,
+                        TouchdownY = (int)TouchdownCoords.Item2,
+                        CompleteX = (int)args.Event.XRoot,
+                        CompleteY = (int)args.Event.YRoot
+		            });
 
                     this.Destroy();
 		        }
-		        
 		    };
 		}
 
@@ -45,12 +44,24 @@ namespace FleetUI
 
         private bool TouchdownComplete { get; set; }
         private Tuple<double, double> TouchdownCoords { get; set; }
-        private Tuple<double, double> CompleteCoords { get; set; } 
 
-        private System.Func<Tuple<double, double, double, double>, bool> Callback { get; set; }
+        /// <summary>
+        /// double 1 and 2 are the initial point, double
+        /// </summary>
+        private Func<ScreenCaptureCoords, bool> Callback { get; set; }
+
+        public struct ScreenCaptureCoords
+        {
+            public int TouchdownX { get; set; }
+            public int TouchdownY { get; set; }
+
+            public int CompleteY { get; set; }
+            public int CompleteX { get; set; }
+        }
 
 		public void Show() {
 			base.Show();
+            
 			this.Opacity = 0.6;
 			this.Fullscreen ();
 			this.Decorated = false;

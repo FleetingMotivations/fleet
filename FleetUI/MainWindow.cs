@@ -107,9 +107,9 @@ public partial class MainWindow: Gtk.Window
         // Hide the main application
         this.Hide();
         // Throw up fullscreen overlay
-		var capSelector = new FleetUI.ScreenCaptureSelector(delegate(Tuple<double, double, double, double> coords)
+		var capSelector = new FleetUI.ScreenCaptureSelector(delegate(ScreenCaptureSelector.ScreenCaptureCoords coords)
 		{
-		    CaptureScreenSection((int)coords.Item1, (int)coords.Item2, (int)coords.Item3, (int)coords.Item4);
+		    CaptureScreenSection(coords.TouchdownX, coords.TouchdownY, coords.CompleteX, coords.CompleteY);
             this.Show();
 		    return true;
 		});

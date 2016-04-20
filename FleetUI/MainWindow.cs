@@ -13,10 +13,7 @@ public partial class MainWindow: Gtk.Window
 {
 	public MainWindow () : base (Gtk.WindowType.Toplevel)
 	{
-		Build ();
-	    //this.Opacity = 0.79;
-	    //this.Decorated = false;
-        //this.Fullscreen();
+	    Build();
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -77,7 +74,6 @@ public partial class MainWindow: Gtk.Window
 
 	private void CaptureScreenSection(int x1, int y1, int x2, int y2)
 	{
-
 	    int temp;
 	    if (x1 > x2)
 	    {
@@ -110,7 +106,6 @@ public partial class MainWindow: Gtk.Window
                 this.DisplayImage(new Pixbuf(bitStream));
 	        }
 	    }
-        this.Resize(10, 10);
 	}
 
     private void DisplayImage(Pixbuf buffer)

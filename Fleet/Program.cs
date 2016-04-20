@@ -27,10 +27,10 @@ namespace Fleet
 			Console.WriteLine ("Broadcasting Service. Press enter to consume service.");
 			Console.ReadLine (); // Required for windows awfulness
 
-
             var app = new FleetApplication();
             app.Run();
 			Console.WriteLine ("Bowsing Service");
+
 			var discovery = new LatticeDiscovery ();
 			discovery.DoBrowsing ();
 

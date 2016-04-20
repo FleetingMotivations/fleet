@@ -100,6 +100,7 @@
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppHaulerCore\UI\AppHaulerSidebar.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Lattice\LatticeRemoting.cs" />
     <Compile Include="Lattice\LatticeDiscovery.cs" />
     <Compile Include="Lattice\LatticeManager.cs" />
+    <Compile Include="Lattice\LatticeCommunication.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

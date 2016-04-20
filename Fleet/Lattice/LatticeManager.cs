@@ -34,7 +34,10 @@ namespace Fleet.Lattice {
 		private IRegisterService zeroconfService;
 
 		// Remoting Channel
-		private TcpChannel remotingChannel;
+		//private TcpChannel remotingChannel;
+
+		// WCF Service
+		private LatticeCommunicationService service;
 
 		//	==	==	==	==
 		// 	Constructor	==
@@ -43,6 +46,8 @@ namespace Fleet.Lattice {
 		public LatticeServiceManager (String serviceName = "Fleet Workstation", Int16 port = 8080) {
 			this.ServiceName = serviceName;
 			this.Port = port;
+
+			this.service = new LatticeCommunicationService (port);
 		}
 
 		~LatticeServiceManager () {
@@ -86,7 +91,7 @@ namespace Fleet.Lattice {
 		//	Remoting Management	==
 		//	==	==	==	==	==	==
 
-		public Boolean RegisterRemotingService(Boolean secure = false) {
+		/*public Boolean RegisterRemotingService(Boolean secure = false) {
 
 			if (this.remotingChannel == null) {
 				var provider = new BinaryServerFormatterSinkProvider ();
@@ -95,7 +100,7 @@ namespace Fleet.Lattice {
 				props ["port"] = this.Port;
 
 				var channel = new TcpChannel (props, null, provider);
-				var interfaceType = Type.GetType ("Fleet.Lattice.LatticeCommunicator");
+				var interfaceType = typeof(Fleet.Lattice.LatticeCommunicator);
 
 				ChannelServices.RegisterChannel (channel, secure);
 				RemotingConfiguration.RegisterWellKnownServiceType (interfaceType, "LatticeCommunicator", WellKnownObjectMode.SingleCall);
@@ -117,6 +122,18 @@ namespace Fleet.Lattice {
 			}
 
 			return false;
+		}*/
+
+		//	==	==	==	==	==	==	==
+		//	Lattice Communication	==
+		//	==	==	==	==	==	==	==
+
+		public Boolean RegisterCommunicationService () {
+			return this.service.RegisterServer ();
+		}
+
+		public Boolean DeregisterCommunicationService () {
+			return this.service.DeregisterServer ();
 		}
 	}
 }

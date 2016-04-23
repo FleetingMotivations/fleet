@@ -1,7 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+<<<<<<< HEAD
 # Visual Studio 2012
 VisualStudioVersion = 12.0.31101.0
+=======
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+>>>>>>> Major refactoring and redesign of appliaction. Fleet code seperated into library. Remoted remoting code, everything is WCF.
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fleet", "Fleet\Fleet.csproj", "{906F00EA-6832-438E-8A37-C282719780B0}"
 EndProject
@@ -13,6 +18,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Zeroconf.Providers.Bonjour", "Mono.Zeroconf-master\src\Mono.Zeroconf.Providers.Bonjour\Mono.Zeroconf.Providers.Bonjour.csproj", "{623325E2-5821-4701-A40C-3759097008DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lattice.Test", "Lattice.Test\Lattice.Test.csproj", "{CAED4DA3-2940-44C1-A4C6-E47915ADE2AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatticeDaemon", "LatticeDaemon\LatticeDaemon.csproj", "{2B3185D0-18EA-4360-9C6B-81A0950DD0C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatticeFoundation", "LatticeFoundation\LatticeFoundation.csproj", "{9A2295C3-4BC2-40EF-B011-22524AD278D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LatticeViewer", "LatticeViewer\LatticeViewer.csproj", "{4B6287FE-40A3-4E05-B2FC-7A4296910AB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,9 +70,23 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-		{CAED4DA3-2940-44C1-A4C6-E47915ADE2AA}.Debug|x86.ActiveCfg = Debug|x86
-		{CAED4DA3-2940-44C1-A4C6-E47915ADE2AA}.Debug|x86.Build.0 = Debug|x86
-		{CAED4DA3-2940-44C1-A4C6-E47915ADE2AA}.Release|x86.ActiveCfg = Release|x86
-		{CAED4DA3-2940-44C1-A4C6-E47915ADE2AA}.Release|x86.Build.0 = Release|x86
+		AppStore|Any CPU = AppStore|Any CPU
+		AppStore|ARM = AppStore|ARM
+		AppStore|iPhone = AppStore|iPhone
+		AppStore|iPhoneSimulator = AppStore|iPhoneSimulator
+		AppStore|x86 = AppStore|x86
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|iPhone = Debug|iPhone
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

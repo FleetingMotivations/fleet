@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Fleet.Lattice;
-using System.Net;
+using Fleet.Lattice.Discovery;
+using Fleet.Lattice.Network;
 using System.ServiceModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -10,27 +11,15 @@ namespace Lattice.Test
 {
 	class MainClass
 	{
-		private static LatticeServiceDiscovery discovery;
-		private static LatticeServiceManager manager;
+        //private static LatticeServiceDiscovery discovery;
+        //private static LatticeServiceManager manager;
 
+        private static LatticeDiscovery discovery;
+
+        [STAThread]
 		public static void Main (string[] args)
 		{
 			Console.WriteLine ("Lattice Test Console");
-
-			LatticeCommunicationServiceHost.DidReceiveBitmap += (o, arg) => {
-
-				try {
-					var bmp = (Bitmap) o;
-
-					var saveDialog = new SaveFileDialog ();
-					saveDialog.ShowDialog ();
-
-					bmp.Save (saveDialog.FileName);
-				} catch (Exception e) {
-					Console.WriteLine (e.ToString ());
-				}
-
-			};
 
 			while (true) {
 				PrintOptions ();
@@ -42,9 +31,9 @@ namespace Lattice.Test
 					switch (option) {
 					case 1: SystemStatus ();
 							break;
-					case 2: ToggleBroadcast ();
+					case 2: ToggleDiscovery ();
 							break;
-					case 3: ToggleDiscovery ();
+					case 3: //ToggleDiscovery ();
 							break;
 					case 4: SendText ();
 							break;
@@ -68,8 +57,8 @@ namespace Lattice.Test
 
 		private static void PrintOptions () {
 			Console.WriteLine ("(1) - System Status");
-			Console.WriteLine ("(2) - Toggle Broadcast");
-			Console.WriteLine ("(3) - Toggle Discovery");
+			Console.WriteLine ("(2) - Toggle Discovery");
+			Console.WriteLine ("(3) - Reserved");
 			Console.WriteLine ("(4) - Send Text");
 			Console.WriteLine ("(5) - Send Image");
 			Console.WriteLine ("(6) - Print Resolved Services");
@@ -81,12 +70,12 @@ namespace Lattice.Test
 		private static void SystemStatus () {
 			Console.WriteLine ("** System Status **");
 
-			if (manager == null)
+			/*if (broadcast == null)
 				Console.WriteLine ("Broadcast: off");
 			else
-				Console.WriteLine ("Broadcast: on");
+				Console.WriteLine ("Broadcast: on");*/
 
-			if (discovery == null) 
+		    if (discovery == null) 
 				Console.WriteLine ("Discovery: off");
 			else
 				Console.WriteLine ("Discovery: on");
@@ -95,13 +84,10 @@ namespace Lattice.Test
 		}
 
 		private static void ToggleBroadcast () {
-			Console.WriteLine ("** Toggle Broadcast **");
+			/*Console.WriteLine ("** Toggle Broadcast **");
 
-			if (manager == null) {
-				manager = new LatticeServiceManager ();
-				manager.RegisterZeroconfService ();
-				//manager.RegisterRemotingService ();
-				manager.RegisterCommunicationService ();
+			if (broadcast == null) {
+				broadcast = new LatticeBroadcast("Fleet ")
 
 				Console.WriteLine ("Broadcast Started");
 
@@ -114,15 +100,15 @@ namespace Lattice.Test
 				Console.WriteLine ("Broadcast Stopped");
 			}
 
-			Console.WriteLine ();
+			Console.WriteLine ();*/
 		}
 
 		private static void ToggleDiscovery () {
 			Console.WriteLine ("** Toggle Discovery **");
 
 			if (discovery == null) {
-				discovery = new LatticeServiceDiscovery ();
-				discovery.StartBrowsing ();
+				discovery = new LatticeDiscovery ();
+                discovery.StartBrowsing();
 
 				Console.WriteLine ("Discovery Started");
 
@@ -143,7 +129,7 @@ namespace Lattice.Test
 				return new ServiceRecord ();
 			}
 
-			ServiceRecord service;
+			ServiceRecord service = new ServiceRecord ();
 			Int16 counter = 0;
 
 			foreach (var record in services) {
@@ -176,11 +162,11 @@ namespace Lattice.Test
 			//Type comType = typeof(Fleet.Lattice.ILatticeCommunicator);
 			//ILatticeCommunicator communicator = (ILatticeCommunicator) Activator.GetObject (comType, "tcp://" + service.Hostname + ":" + service.Port + "/LatticeCommunicator");
 
-			var address = new EndpointAddress ("http://" + service.Hostname + ":" + service.Port);
-			var binding = new BasicHttpBinding ();
-
-			var client = new LatticeCommunicationServiceClient (binding, address);
-
+			var address = new EndpointAddress ("net.tcp://" + service.Hostname + "/Lattice");
+			var binding = new NetTcpBinding ();
+            binding.Security.Mode = SecurityMode.None;
+            var client = new LatticeServiceClient (binding, address);
+            
 			Console.WriteLine ("Sending to service " + service);
 
 			//communicator.ShareString (text);
@@ -200,19 +186,20 @@ namespace Lattice.Test
 
 			ServiceRecord service = GetServiceRecord (serviceIndex);
 
-			var address = new EndpointAddress ("http://" + service.Hostname + ":" + service.Port);
-			var binding = new BasicHttpBinding ();
+            var address = new EndpointAddress("net.tcp://" + service.Hostname + "/Lattice");
+            var binding = new NetTcpBinding();
+            binding.Security.Mode = SecurityMode.None;
 
-			var client = new LatticeCommunicationServiceClient (binding, address);
+            var client = new LatticeServiceClient(binding, address);
 
-			var openFileDialog = new OpenFileDialog ();
+            var openFileDialog = new OpenFileDialog ();
 			openFileDialog.ShowDialog ();
 
 			var bmp = (Bitmap) Bitmap.FromFile (openFileDialog.FileName);
 
 			Console.WriteLine ("Sending to service " + service);
 
-			client.SendBitmap (bmp);
+			client.SendImage (bmp);
 
 			Console.WriteLine ();
 		

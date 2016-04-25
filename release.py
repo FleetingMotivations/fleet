@@ -10,10 +10,11 @@ from os.path import basename
 def timeStamp(fmt='%Y-%m-%d-%H-%M-%S'):
 	return datetime.datetime.now().strftime(fmt)
 
+
 def zipdir(path, ziph):
 	for root, dirs, files in os.walk(path):
 		for file in files:
-			ziph.write(os.path.join(root, file), basename(os.path.join(root, file)))
+			ziph.write(os.path.join(root, file))
 
 def connect_to_ftp():
 	return_ftps = None

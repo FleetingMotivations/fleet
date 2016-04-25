@@ -60,6 +60,8 @@ namespace LatticeSharing
                 var item = table.Items[index] as RepresentedListViewItem<ServiceRecord>;
                 selectedRecords.Add(item.RepresentedObject);
             }
+
+            this.Close();
         }
     }
 }

@@ -101,7 +101,7 @@ public partial class MainWindow: Gtk.Window
 
                 // Change the format of the image
                 var bitStream = new MemoryStream();
-                screenCapture.Save(bitStream, ImageFormat.Jpeg);
+                screenCapture.Save(bitStream, ImageFormat.Png);
 	            bitStream.Position = 0;
                 this.DisplayImage(new Pixbuf(bitStream));
 	        }
@@ -131,5 +131,15 @@ public partial class MainWindow: Gtk.Window
 
 		capSelector.Show ();
 
+	}
+
+
+	protected void OnBordersToggled (object sender, EventArgs e)
+	{
+	    Decorated = !Decorated;
+	}
+	protected void OnFullscreenActivated (object sender, EventArgs e)
+	{
+	    this.Fullscreen();
 	}
 }

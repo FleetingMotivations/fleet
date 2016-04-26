@@ -7,7 +7,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/FleetUI.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="499 300">
+  <widget class="Gtk.Window" id="MainWindow" design-size="597 300">
     <action-group name="Default">
       <action id="FileAction">
         <property name="Type">Action</property>
@@ -49,6 +49,25 @@
         <property name="ShortLabel" translatable="yes">Portion</property>
         <signal name="Activated" handler="OnPortion" />
       </action>
+      <action id="TrollAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Troll</property>
+        <property name="ShortLabel" translatable="yes">Troll</property>
+      </action>
+      <action id="FullscreenAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Fullscreen</property>
+        <property name="ShortLabel" translatable="yes">Fullscreen</property>
+        <signal name="Activated" handler="OnFullscreenActivated" />
+      </action>
+      <action id="EnableBordersAction">
+        <property name="Type">Toggle</property>
+        <property name="Label" translatable="yes">Enable Borders</property>
+        <property name="ShortLabel" translatable="yes">Enable Borders</property>
+        <property name="DrawAsRadio">False</property>
+        <property name="Active">False</property>
+        <signal name="Toggled" handler="OnBordersToggled" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">Capture</property>
@@ -72,6 +91,10 @@
               <node type="Menu" action="CaptureAction">
                 <node type="Menuitem" action="DesktopAction" />
                 <node type="Menuitem" action="PortionAction" />
+              </node>
+              <node type="Menu" action="TrollAction">
+                <node type="Menuitem" action="FullscreenAction" />
+                <node type="Menuitem" action="EnableBordersAction" />
               </node>
             </node>
           </widget>

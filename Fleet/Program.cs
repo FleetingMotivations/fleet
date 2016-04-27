@@ -2,7 +2,6 @@
 using log4net;
 using Fleet.AppHaulerCore.UI;
 using Fleet.Application;
-using Fleet.Lattice;
 
 namespace Fleet
 {
@@ -14,26 +13,6 @@ namespace Fleet
 		{
 			log4net.Config.XmlConfigurator.Configure ();
 			Logger.Error ("Oh no");
-
-			Int16 port = 8080;
-
-			if (args.Length == 1)
-				port = Convert.ToInt16(args[0]);
-
-			var workstation = new LatticeServiceManager ("Lattice Workstation", port);
-			workstation.RegisterZeroconfService ();
-			workstation.RegisterRemotingService ();
-
-			Console.WriteLine ("Broadcasting Service. Press enter to consume service.");
-			Console.ReadLine (); // Required for windows awfulness
-
-            var app = new FleetApplication();
-            app.Run();
-			Console.WriteLine ("Bowsing Service");
-
-			var discovery = new LatticeDiscovery ();
-			discovery.DoBrowsing ();
-
 			Console.ReadLine ();
 		}
 	

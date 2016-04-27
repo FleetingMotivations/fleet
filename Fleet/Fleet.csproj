@@ -117,6 +117,14 @@
     <None Include="Properties\Mono.Zeroconf.Providers.Bonjour.dll.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LatticeDaemon\LatticeDaemon.csproj">
+      <Project>{2b3185d0-18ea-4360-9c6b-81a0950dd0c7}</Project>
+      <Name>LatticeDaemon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LatticeFoundation\LatticeFoundation.csproj">
+      <Project>{9a2295c3-4bc2-40ef-b011-22524ad278d4}</Project>
+      <Name>LatticeFoundation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mono.Zeroconf-master\src\Mono.Zeroconf\Mono.Zeroconf.csproj">
       <Project>{5CF88E3A-13DD-4114-BAD9-DA826946516F}</Project>
       <Name>Mono.Zeroconf</Name>

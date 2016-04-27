@@ -1,13 +1,14 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using Gdk;
 using Gtk;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Windows.Forms;
 
 using FleetUI;
+using TypeConverter = GLib.TypeConverter;
 
 public partial class MainWindow: Gtk.Window
 {
@@ -101,7 +102,7 @@ public partial class MainWindow: Gtk.Window
 
                 // Change the format of the image
                 var bitStream = new MemoryStream();
-                screenCapture.Save(bitStream, ImageFormat.Jpeg);
+                screenCapture.Save(bitStream, ImageFormat.Bmp);
 	            bitStream.Position = 0;
                 this.DisplayImage(new Pixbuf(bitStream));
 	        }
@@ -132,4 +133,35 @@ public partial class MainWindow: Gtk.Window
 		capSelector.Show ();
 
 	}
+
+	protected void OnSaveImage (object sender, EventArgs e)
+	{
+	    var bitmap = displayImage.Pixbuf.ToBitmap();
+	    var outputFile = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+	    outputFile += "/img.bmp";
+        Console.WriteLine(outputFile);
+
+	    using (var memory = new MemoryStream())
+	    {
+	        using (var fileStream = new FileStream(outputFile, FileMode.Create, FileAccess.ReadWrite))
+	        {
+	            bitmap.Save(memory, ImageFormat.Bmp);
+	            byte[] bytes = memory.ToArray();
+                fileStream.Write(bytes, 0, bytes.Length);
+	        }
+	    }
+        bitmap.Dispose();
+	}
+
+
+
+}
+
+public static class Extensions
+{
+    public static System.Drawing.Bitmap ToBitmap(this Pixbuf pix)
+    {
+        var converter = TypeDescriptor.GetConverter(typeof(Bitmap));
+        return (Bitmap) converter.ConvertFrom(pix.SaveToBuffer("bmp"));
+    }
 }

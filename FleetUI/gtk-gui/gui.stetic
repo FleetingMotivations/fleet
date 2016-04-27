@@ -49,6 +49,12 @@
         <property name="ShortLabel" translatable="yes">Portion</property>
         <signal name="Activated" handler="OnPortion" />
       </action>
+      <action id="SaveAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Save</property>
+        <property name="ShortLabel" translatable="yes">Save</property>
+        <signal name="Activated" handler="OnSaveImage" />
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">Capture</property>
@@ -65,6 +71,7 @@
             <node name="menubar1" type="Menubar">
               <node type="Menu" action="FileAction">
                 <node type="Menuitem" action="OpenAction" />
+                <node type="Menuitem" action="SaveAction" />
                 <node type="Menuitem" action="AboutAction" />
                 <node type="Separator" />
                 <node type="Menuitem" action="ExitAction" />

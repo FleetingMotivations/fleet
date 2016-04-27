@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -46,7 +46,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\LatticeFoundation\LatticeFoundation.csproj">
-      <Project>{9a2295c3-4bc2-40ef-b011-22524ad278d4}</Project>
+      <Project>{9A2295C3-4BC2-40EF-B011-22524AD278D4}</Project>
       <Name>LatticeFoundation</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mono.Zeroconf-master\src\Mono.Zeroconf\Mono.Zeroconf.csproj">

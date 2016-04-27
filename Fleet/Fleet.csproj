@@ -97,6 +97,10 @@
     <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <HintPath>..\packages\GtkSharp.3.1.3\lib\net45\pango-sharp.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppHaulerCore\UI\AppHaulerSidebar.cs" />
@@ -108,6 +112,27 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Mono.Zeroconf.Providers.Bonjour.dll.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LatticeDaemon\LatticeDaemon.csproj">
+      <Project>{2b3185d0-18ea-4360-9c6b-81a0950dd0c7}</Project>
+      <Name>LatticeDaemon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LatticeFoundation\LatticeFoundation.csproj">
+      <Project>{9a2295c3-4bc2-40ef-b011-22524ad278d4}</Project>
+      <Name>LatticeFoundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mono.Zeroconf-master\src\Mono.Zeroconf\Mono.Zeroconf.csproj">
+      <Project>{5CF88E3A-13DD-4114-BAD9-DA826946516F}</Project>
+      <Name>Mono.Zeroconf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mono.Zeroconf-master\src\Mono.Zeroconf.Providers.Bonjour\Mono.Zeroconf.Providers.Bonjour.csproj">
+      <Project>{623325E2-5821-4701-A40C-3759097008DD}</Project>
+      <Name>Mono.Zeroconf.Providers.Bonjour</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

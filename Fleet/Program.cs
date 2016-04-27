@@ -9,17 +9,11 @@ namespace Fleet
 	{
 		private static ILog Logger => LogManager.GetLogger (System.Reflection.MethodBase.GetCurrentMethod ().DeclaringType);
 
-	    public static void Main (string[] args)
+		public static void Main (string[] args)
 		{
-			log4net.Config.XmlConfigurator.Configure();
+			log4net.Config.XmlConfigurator.Configure ();
 			Logger.Error ("Oh no");
-
-			Console.WriteLine ("Hello World!");
-			Console.ReadLine (); // Required for windows awfulness
-
-
-            var app = new FleetApplication();
-            app.Run();
+			Console.ReadLine ();
 		}
 	
         public int killAllHumans(){

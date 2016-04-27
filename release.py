@@ -26,8 +26,8 @@ def connect_to_ftp():
 			return_ftps = ftps
 			break
 
-		except Exception, e: 
-			print str(e)
+		except Exception as e: 
+			print (str(e))
 
 		i+=1
 

@@ -43,7 +43,12 @@ namespace FleetUI
 		    };
 		}
 
-	    private Cairo.Context DrawingArea => Gdk.CairoHelper.Create(this.captureArea.GdkWindow);
+		// private Cairo.Context DrawingArea => Gdk.CairoHelper.Create(this.captureArea.GdkWindow)
+		private Cairo.Context DrawingArea {
+			get {
+				return Gdk.CairoHelper.Create (this.captureArea.GdkWindow);
+			}
+		}
 
         private bool TouchdownComplete { get; set; }
         private Tuple<double, double> TouchdownCoords { get; set; }

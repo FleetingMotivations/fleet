@@ -42,7 +42,7 @@ namespace Fleet.Lattice.Discovery
 
         ~LatticeDiscovery()
         {
-            this.browser?.Dispose();
+            this.browser.Dispose();
         }
 
         //	==	==	==	==	==	==	==

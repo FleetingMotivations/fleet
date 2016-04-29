@@ -7,15 +7,16 @@ namespace FleetUI
 	public partial class ShareSelectionDialog : Gtk.Dialog
 	{
 		private Gtk.ListStore model;
-		public String selectedHost;
+		public List<String> selectedHosts;
 
 		public ShareSelectionDialog ()
 		{
 			this.Build ();
 
-
 			var table = this.treeview4;
+            table.Selection.Mode = Gtk.SelectionMode.Multiple;
 
+            // Create columns
 			var col1 = new Gtk.TreeViewColumn ();
 			col1.Title = "Service Name";
 			var col1renderer = new Gtk.CellRendererText ();
@@ -31,6 +32,7 @@ namespace FleetUI
 			table.AppendColumn (col1);
 			table.AppendColumn (col2);
 
+            // Create model
 			var listStore = new Gtk.ListStore (typeof(String), typeof(String));
 			
 			table.Model = listStore;
@@ -38,29 +40,44 @@ namespace FleetUI
 			this.model = listStore;
 			this.OnTableRefresh (null, null);
 
+            // On close event
 			this.buttonOk.Clicked += OnSelection;
 		}
 			
+        // Table refresh event
 		public void OnTableRefresh(Object o, EventArgs args) {
+            // Clear model, get current records
 			model.Clear();
 			var records = MainClass.discovery.CurrentRecords;
 
+            // Insert all record values into table
 			foreach (var recordpair in records) {
 				var record = recordpair.Value;
-
 				this.model.AppendValues (record.ServiceName, record.Hostname);
-			}
+            }
 		}
 
+        // On result selection event
 		protected void OnSelection (object sender, EventArgs e)
 		{
-			var selected = this.treeview4.Selection;
-			Gtk.TreeModel model;
+#warning This needs to accomodate multiple selection
+            // Get the selection, get selection model and iterator
+            var selected = this.treeview4.Selection;
 			Gtk.TreeIter iter;
 
-			selected.GetSelected (out model, out iter);
-			this.selectedHost = model.GetValue (iter, 1) as String;
-		}
+            // Init selection and iterator
+            selectedHosts = new List<String>();
+            var rows = selected.GetSelectedRows();
+
+            // Send to each host
+            foreach (var row in rows)
+            {
+                this.model.GetIter(out iter, row);
+
+                var host = this.model.GetValue(iter, 1) as String;
+                selectedHosts.Add(host);
+            }
+        }
 
 		protected void OnCancel (object sender, EventArgs e)
 		{

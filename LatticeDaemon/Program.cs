@@ -57,7 +57,7 @@ namespace LatticeDaemon
             LatticeServiceHost.DidReceiveImage += (bmp, arg) => {
                 Console.WriteLine("Recevied Image: {0}", bmp);
 
-                var filename = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                /*var filename = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 filename += Path.DirectorySeparatorChar + "recevied-" + DateTime.Now.ToString("yyyyMMDD-hh-mm-ss") + ".jpg";
                 
                 Console.WriteLine("Saving to: {0}", filename);
@@ -68,7 +68,7 @@ namespace LatticeDaemon
                 } catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
-                }
+                }*/
 
                 foreach (var ippair in LatticeIPCHost.CurrentClients)
                 {

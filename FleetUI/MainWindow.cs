@@ -111,7 +111,7 @@ public partial class MainWindow: Gtk.Window
 	    }
 	}
 
-    private void DisplayImage(Pixbuf buffer)
+    public void DisplayImage(Pixbuf buffer)
     {
 		if (displayImage != null)
 			if (displayImage.Pixbuf != null)
@@ -152,25 +152,34 @@ public partial class MainWindow: Gtk.Window
 	    this.Fullscreen();
 	}
 
-
+    // Sharing Event
 	protected void OnShareToWorkstations (object sender, EventArgs e)
 	{
+        // Make selection dialog
 		var selector = new ShareSelectionDialog ();
 		selector.Parent = this;
+
+        // Run the dialog and get the response code
 		var response = (ResponseType)selector.Run ();
 		selector.Destroy ();
 
+        // On selection
 		if (response == ResponseType.Ok) {
 
+            // Get the image as a bitmap (WCF sharing)
 			var image = this.displayImage.Pixbuf.ToBitmap ();
 
-			var selected = selector.selectedHost;
-			var client = LatticeUtil.MakeLatticeClient (selected);
-			client.SendImage (image);
+            // Send to each host
+            foreach (var host in selector.selectedHosts)
+            {
+                var client = LatticeUtil.MakeLatticeClient(host);
+                client.SendImage(image);
+            }
 		}
 	}
 }
 
+// Extension to convert a Gtk.PixelBuffer to System.Drawing.Bitmap
 public static class BufferConversionExtension {
 	public static System.Drawing.Bitmap ToBitmap(this Pixbuf pix) {
 		System.ComponentModel.TypeConverter tc;

@@ -10,6 +10,12 @@ namespace File_O_Matic
 {
     public partial class Form1 : Form
     {
+        public Form1(String filename): this()
+        {
+            this.fileLabel.Text = filename;
+            this.shareButton.Enabled = true;
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -53,7 +59,6 @@ namespace File_O_Matic
             {
                 this.fileLabel.Text = picker.FileName;
                 this.shareButton.Enabled = true;
-                  
             }
         }
 

@@ -27,5 +27,12 @@ namespace File_O_Matic
         {
             Process.Start(filename);
         }
+
+        private void OnShare(object sender, EventArgs e)
+        {
+            var filewindow = new Form1(this.filename);
+            filewindow.Show();
+            this.Close();
+        }
     }
 }

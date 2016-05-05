@@ -27,6 +27,7 @@ namespace Fleet.Lattice.Network
     //  Lattice Server  ==
     //  ==  ==  ==  ==  ==
 
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class LatticeServiceHost : ILatticeService
     {
         public static event DidReceiveEvent<String> DidReceiveText = delegate { };

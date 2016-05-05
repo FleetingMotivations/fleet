@@ -34,6 +34,7 @@ namespace Fleet.Lattice.IPC
     //  Host    ==
     //  ==  ==  ==
 
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class LatticeIPCHost: ILatticeIPC
     {
         public static Dictionary<String, String> clients = new Dictionary<string, string>();

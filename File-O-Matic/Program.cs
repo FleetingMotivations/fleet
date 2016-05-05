@@ -34,7 +34,7 @@ namespace File_O_Matic
             LatticeIPCHost.DidPassFilename += (filename, arg) =>
             {
                 Console.WriteLine("Recevied File Reference: {0}", filename);
-
+                
                 var mainform = Application.OpenForms[0];
                 if (mainform.InvokeRequired)
                 {

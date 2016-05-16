@@ -27,9 +27,9 @@ namespace File_O_Matic
             table.GridLines = true;
 
             ColumnHeader serviceName = new ColumnHeader();
-            serviceName.Text = "Service Name";
+            serviceName.Text = "Computer Name";
             ColumnHeader hostName = new ColumnHeader();
-            hostName.Text = "Host name";
+            hostName.Text = "Computer Address";
 
             table.Columns.AddRange(new ColumnHeader[] { serviceName, hostName });
 
@@ -47,7 +47,8 @@ namespace File_O_Matic
                 table.Items.Add(row);
             }
 
-            //OnRefreshList(null, null);
+            table.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            table.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void OnOpenFile(object sender, EventArgs e)

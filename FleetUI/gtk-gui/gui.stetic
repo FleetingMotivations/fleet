@@ -107,9 +107,6 @@
                 <node type="Menuitem" action="FullscreenAction" />
                 <node type="Menuitem" action="EnableBordersAction" />
               </node>
-              <node type="Menu" action="ShareAction">
-                <node type="Menuitem" action="ToWorkstationsAction" />
-              </node>
             </node>
           </widget>
           <packing>

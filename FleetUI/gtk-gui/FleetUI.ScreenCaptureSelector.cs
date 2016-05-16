@@ -21,7 +21,7 @@ namespace FleetUI
 			this.vbox1.Spacing = 6;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.captureArea = new global::Gtk.DrawingArea ();
-			this.captureArea.Name = "drawingarea1";
+			this.captureArea.Name = "captureArea";
 			this.vbox1.Add (this.captureArea);
 			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.captureArea]));
 			w1.Position = 0;

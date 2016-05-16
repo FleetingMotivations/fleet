@@ -1,36 +1,11 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-﻿<Properties StartupItem="Fleet\Fleet.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="FleetUI\ScreenCaptureSelector.cs">
+﻿<Properties StartupItem="FleetUI\FleetUI.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="FleetUI\MainWindow.cs">
     <Files>
-      <File FileName="Fleet\AppHaulerCore\UI\AppHaulerSidebar.cs" Line="1" Column="1" />
       <File FileName="FleetUI\Program.cs" Line="1" Column="1" />
       <File FileName="FleetUI\MainWindow.cs" Line="1" Column="1" />
-      <File FileName="FleetUI\ScreenCaptureSelector.cs" Line="22" Column="1" />
-=======
-﻿<Properties StartupItem="Fleet/Fleet.csproj">
-=======
-﻿<Properties StartupItem="Lattice.Test/Lattice.Test.csproj">
->>>>>>> Changes in recoding services to stop exceptions.
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workbench ActiveDocument="Fleet/Lattice/Lattice.cs">
-    <Files>
-      <File FileName="Fleet/Lattice/Lattice.cs" Line="29" Column="14" />
-      <File FileName="Fleet/Program.cs" Line="10" Column="14" />
-      <File FileName="Mono.Zeroconf-master/src/Mono.Zeroconf.Providers.Bonjour/Mono.Zeroconf.Providers.Bonjour/RegisterService.cs" Line="81" Column="30" />
->>>>>>> Minor Changes
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="Fleet/app.config">
-    <Files>
-      <File FileName="Lattice.Test/Program.cs" Line="28" Column="4" />
-      <File FileName="Fleet/Lattice/LatticeRemoting.cs" Line="21" Column="49" />
-      <File FileName="Fleet/app.config" Line="19" Column="21" />
-      <File FileName="Fleet/packages.config" Line="1" Column="1" />
-      <File FileName="Lattice.Test/Properties/Mono.Zeroconf.Providers.Bonjour.dll.config" Line="1" Column="1" />
-      <File FileName="Lattice.Test/Properties/AssemblyInfo.cs" Line="1" Column="1" />
->>>>>>> Converted to WCF. Remoting would cause odd behaviour to occur. Images can be send accross network.
+      <File FileName="LatticeFoundation\LatticeDiscovery.cs" Line="1" Column="1" />
+      <File FileName="FleetUI\ShareSelectionDialog.cs" Line="12" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

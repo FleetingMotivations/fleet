@@ -25,6 +25,10 @@ public partial class MainWindow
 	
 	private global::Gtk.ToggleAction EnableBordersAction;
 	
+	private global::Gtk.Action ShareAction;
+	
+	private global::Gtk.Action ToWorkstationsAction;
+	
 	private global::Gtk.VBox vbox1;
 	
 	private global::Gtk.MenuBar menubar1;
@@ -67,6 +71,12 @@ public partial class MainWindow
 		this.EnableBordersAction = new global::Gtk.ToggleAction ("EnableBordersAction", global::Mono.Unix.Catalog.GetString ("Enable Borders"), null, null);
 		this.EnableBordersAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Enable Borders");
 		w1.Add (this.EnableBordersAction, null);
+		this.ShareAction = new global::Gtk.Action ("ShareAction", global::Mono.Unix.Catalog.GetString ("Share"), null, null);
+		this.ShareAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Share");
+		w1.Add (this.ShareAction, null);
+		this.ToWorkstationsAction = new global::Gtk.Action ("ToWorkstationsAction", global::Mono.Unix.Catalog.GetString ("To Workstations"), null, null);
+		this.ToWorkstationsAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("To Workstations");
+		w1.Add (this.ToWorkstationsAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -109,5 +119,6 @@ public partial class MainWindow
 		this.PortionAction.Activated += new global::System.EventHandler (this.OnPortion);
 		this.FullscreenAction.Activated += new global::System.EventHandler (this.OnFullscreenActivated);
 		this.EnableBordersAction.Toggled += new global::System.EventHandler (this.OnBordersToggled);
+		this.ToWorkstationsAction.Activated += new global::System.EventHandler (this.OnShareToWorkstations);
 	}
 }

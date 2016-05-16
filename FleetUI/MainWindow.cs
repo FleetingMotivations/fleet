@@ -2,12 +2,15 @@
 using System.Linq;
 using Gdk;
 using Gtk;
+using Fleet.Lattice;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 
 using FleetUI;
+using GLib;
+using System.ComponentModel;
 
 public partial class MainWindow: Gtk.Window
 {
@@ -108,9 +111,14 @@ public partial class MainWindow: Gtk.Window
 	    }
 	}
 
-    private void DisplayImage(Pixbuf buffer)
+    public void DisplayImage(Pixbuf buffer)
     {
-        displayImage?.Pixbuf?.Dispose();
+		if (displayImage != null)
+			if (displayImage.Pixbuf != null)
+				displayImage.Pixbuf.Dispose ();
+
+		// Was causing compier error with Xamarin
+        //displayImage?.Pixbuf?.Dispose();
         displayImage.Pixbuf = buffer;       
     }
 
@@ -131,7 +139,8 @@ public partial class MainWindow: Gtk.Window
 
 		capSelector.Show ();
 
-	}
+	}
+
 
 
 	protected void OnBordersToggled (object sender, EventArgs e)
@@ -141,5 +150,41 @@ public partial class MainWindow: Gtk.Window
 	protected void OnFullscreenActivated (object sender, EventArgs e)
 	{
 	    this.Fullscreen();
+	}
+
+    // Sharing Event
+	protected void OnShareToWorkstations (object sender, EventArgs e)
+	{
+        // Make selection dialog
+		var selector = new ShareSelectionDialog ();
+		selector.Parent = this;
+
+        // Run the dialog and get the response code
+		var response = (ResponseType)selector.Run ();
+		selector.Destroy ();
+
+        // On selection
+		if (response == ResponseType.Ok) {
+
+            // Get the image as a bitmap (WCF sharing)
+			var image = this.displayImage.Pixbuf.ToBitmap ();
+
+            // Send to each host
+            foreach (var host in selector.selectedHosts)
+            {
+                var client = LatticeUtil.MakeLatticeClient(host);
+                client.SendImage(image);
+            }
+		}
+	}
+}
+
+// Extension to convert a Gtk.PixelBuffer to System.Drawing.Bitmap
+public static class BufferConversionExtension {
+	public static System.Drawing.Bitmap ToBitmap(this Pixbuf pix) {
+		System.ComponentModel.TypeConverter tc;
+		tc = System.ComponentModel.TypeDescriptor.GetConverter (typeof(System.Drawing.Bitmap));
+		System.Drawing.Bitmap img = tc.ConvertFrom (pix.SaveToBuffer ("jpeg")) as System.Drawing.Bitmap;
+		return img;
 	}
 }

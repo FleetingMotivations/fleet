@@ -5,6 +5,7 @@ using Fleet.Lattice.Broadcast;
 using Fleet.Lattice.Network;
 using Fleet.Lattice.IPC;
 using System.Drawing;
+using System.Net;
 
 namespace LatticeDaemon
 {
@@ -12,7 +13,7 @@ namespace LatticeDaemon
     {
         static void Main(string[] args)
         {
-            String serviceName = "Lattice Service Daemon";
+            String serviceName = Dns.GetHostName();
             Int16 port = 80;
             String regtype = "_lattice._tcp";
             String replydomain = "local";

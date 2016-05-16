@@ -71,6 +71,7 @@
             this.Controls.Add(this.filenameLabel);
             this.Name = "FileRepresentationWindow";
             this.Text = "FileRepresentationWindow";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CheckSave);
             this.ResumeLayout(false);
             this.PerformLayout();
 

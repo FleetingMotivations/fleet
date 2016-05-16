@@ -21,7 +21,11 @@ namespace File_O_Matic
 
             this.filename = filename;
             this.filenameLabel.Text = filename;
+
+            
         }
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -33,6 +37,19 @@ namespace File_O_Matic
             var filewindow = new Form1(this.filename);
             filewindow.Show();
             this.Close();
+        }
+
+        private void CheckSave(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Do you want to save this file?", "Save File", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                var savedialog = new SaveFileDialog();
+                
+                if (savedialog.ShowDialog() == DialogResult.OK)
+                {
+                    System.IO.File.Move(this.filename, savedialog.FileName);
+                }
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace File_O_Matic
 {
@@ -51,7 +52,14 @@ namespace File_O_Matic
         {
             if (!this.saved)
             {
-                this.DoSave();
+                try
+                {
+                    this.DoSave();
+                }
+                catch (Exception)
+                {
+
+                }
             }
         }
 
@@ -63,14 +71,15 @@ namespace File_O_Matic
 
                 if (savedialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (!System.IO.File.Exists(this.filename))
+                    if (System.IO.File.Exists(savedialog.FileName))
                     {
-                        if (MessageBox.Show("A file already exists with this name. Would you like to override it?", "Override File", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        {
-                            System.IO.File.Move(this.filename, savedialog.FileName);
-                            this.saved = true;
-                        }
+                        File.Delete(this.filename);
                     }
+
+                    File.Move(this.filename, savedialog.FileName);
+                    this.saved = true;
+                    this.filename = savedialog.FileName;
+                    this.filenameLabel.Text = filename;
                 }
             }
         }
@@ -82,7 +91,15 @@ namespace File_O_Matic
 
         private void button3_Click(object sender, EventArgs e)
         {
-            this.DoSave();
+            try
+            {
+                this.DoSave();
+            }
+            catch (Exception)
+            {
+
+            }
+
         }
     }
 }

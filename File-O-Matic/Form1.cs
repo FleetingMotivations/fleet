@@ -94,7 +94,7 @@ namespace File_O_Matic
 
             var file = new LatticeFile();
             file.FileContents = File.ReadAllBytes(this.fileLabel.Text);
-
+           
             var components = this.fileLabel.Text.Split('\\');
             file.FileName = components[components.Length - 1];
 

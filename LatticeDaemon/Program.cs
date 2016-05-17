@@ -89,12 +89,13 @@ namespace LatticeDaemon
             LatticeServiceHost.DidReceiveFile += (file, eargs) =>
             {
                 var filename = Path.GetTempPath() + file.FileName;
-                
+               
                 Console.WriteLine("Writing file to: {0}", filename);
 
                 try
                 {
                     File.WriteAllBytes(filename, file.FileContents);
+                    
                 } catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());
@@ -120,7 +121,7 @@ namespace LatticeDaemon
             var wcfHost = LatticeUtil.MakeLatticeHost();
             wcfHost.Open();
             Console.WriteLine("Server is accepting sharing Clients");
-
+            
             // Start Zeroconf
             var broadcast = new LatticeBroadcast(serviceName, port);
             broadcast.RegisterZeroconfService("Lattice", regtype, replydomain);

@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fleet.Lattice.IPC
 {
@@ -17,11 +14,14 @@ namespace Fleet.Lattice.IPC
     [ServiceContract]
     public interface ILatticeIPC
     {
-        [OperationContract]
+        [OperationContract(IsOneWay=true)]
         void PassText(String text);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void PassImage(Bitmap bmp);
+
+        [OperationContract(IsOneWay = true)]
+        void PassFilename(String filename);
 
         [OperationContract]
         Boolean RegisterClient(String pipename);
@@ -34,17 +34,19 @@ namespace Fleet.Lattice.IPC
     //  Host    ==
     //  ==  ==  ==
 
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class LatticeIPCHost: ILatticeIPC
     {
         public static Dictionary<String, String> clients = new Dictionary<string, string>();
-        public static IReadOnlyDictionary<String, String> CurrentClients { get
-            {
+        public static IReadOnlyDictionary<String, String> CurrentClients {
+            get {
                 return new ReadOnlyDictionary<String, String>(clients);
             }
         }
 
         public static event DidReceiveEvent<String> DidPassText = delegate { };
         public static event DidReceiveEvent<Image> DidPassImage = delegate { };
+        public static event DidReceiveEvent<String> DidPassFilename = delegate { };
 
         public void PassText(String text)
         {
@@ -54,6 +56,11 @@ namespace Fleet.Lattice.IPC
         public void PassImage(Bitmap img)
         {
             DidPassImage(img, new EventArgs());
+        }
+
+        public void PassFilename(String filename)
+        {
+            DidPassFilename(filename, new EventArgs());
         }
 
         public Boolean RegisterClient(String pipename)
@@ -87,6 +94,11 @@ namespace Fleet.Lattice.IPC
         public void PassImage(Bitmap img)
         {
             Channel.PassImage(img);
+        }
+
+        public void PassFilename(String filename)
+        {
+            Channel.PassFilename(filename);
         }
 
         public Boolean RegisterClient(String pipename)

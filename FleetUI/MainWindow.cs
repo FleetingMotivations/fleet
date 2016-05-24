@@ -131,7 +131,8 @@ public partial class MainWindow: Gtk.Window
 
 		capSelector.Show ();
 
-	}
+	}
+
 
 
 	protected void OnBordersToggled (object sender, EventArgs e)

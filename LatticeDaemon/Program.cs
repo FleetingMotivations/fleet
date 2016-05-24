@@ -5,6 +5,7 @@ using Fleet.Lattice.Broadcast;
 using Fleet.Lattice.Network;
 using Fleet.Lattice.IPC;
 using System.Drawing;
+using System.Net;
 
 namespace LatticeDaemon
 {
@@ -12,7 +13,7 @@ namespace LatticeDaemon
     {
         static void Main(string[] args)
         {
-            String serviceName = "Lattice Service Daemon";
+            String serviceName = Dns.GetHostName();
             Int16 port = 80;
             String regtype = "_lattice._tcp";
             String replydomain = "local";
@@ -35,7 +36,7 @@ namespace LatticeDaemon
             ipcHost.Open();
             Console.WriteLine("Server is accepting IPC Clients");
 
-            // Start WCF
+            // Service Events
             LatticeServiceHost.DidReceiveText += (text, arg) => {
                 Console.WriteLine("Received Text: {0}", text);
 
@@ -85,15 +86,45 @@ namespace LatticeDaemon
                 }
             };
 
+            LatticeServiceHost.DidReceiveFile += (file, eargs) =>
+            {
+                var filename = Path.GetTempPath() + file.FileName;
+               
+                Console.WriteLine("Writing file to: {0}", filename);
+
+                try
+                {
+                    File.WriteAllBytes(filename, file.FileContents);
+                    
+                } catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    return;
+                }
+
+                foreach (var ippair in LatticeIPCHost.CurrentClients)
+                {
+                    try
+                    {
+                        var pipe = ippair.Key;
+                        var client = LatticeUtil.MakeIPCClient(pipe);
+                        client.PassFilename(filename);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+                }
+            };
+
+            // Start Service
             var wcfHost = LatticeUtil.MakeLatticeHost();
             wcfHost.Open();
             Console.WriteLine("Server is accepting sharing Clients");
-
+            
             // Start Zeroconf
             var broadcast = new LatticeBroadcast(serviceName, port);
             broadcast.RegisterZeroconfService("Lattice", regtype, replydomain);
-
-            
 
             Console.WriteLine("Press any key to stop the server");
             Console.ReadLine();

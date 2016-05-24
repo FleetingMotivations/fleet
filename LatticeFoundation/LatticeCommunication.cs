@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fleet.Lattice.Model;
+using System;
 using System.Drawing;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
@@ -12,21 +13,26 @@ namespace Fleet.Lattice.Network
     [ServiceContract]
     public interface ILatticeService
     {
-        [OperationContract]
+        [OperationContract(IsOneWay=true)]
         void SendText(String text);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void SendImage(Bitmap bmp);
+
+        [OperationContract(IsOneWay = true)]
+        void SendFile(LatticeFile file);
     }
 
     //  ==  ==  ==  ==  ==
     //  Lattice Server  ==
     //  ==  ==  ==  ==  ==
 
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class LatticeServiceHost : ILatticeService
     {
         public static event DidReceiveEvent<String> DidReceiveText = delegate { };
         public static event DidReceiveEvent<Image> DidReceiveImage = delegate { };
+        public static event DidReceiveEvent<LatticeFile> DidReceiveFile = delegate { };
 
         public void SendText(String text)
         {
@@ -36,6 +42,11 @@ namespace Fleet.Lattice.Network
         public void SendImage(Bitmap img)
         {
             DidReceiveImage(img, new EventArgs());
+        }
+
+        public void SendFile(LatticeFile file)
+        {
+            DidReceiveFile(file, new EventArgs());
         }
     }
 
@@ -55,6 +66,11 @@ namespace Fleet.Lattice.Network
         public void SendImage(Bitmap img)
         {
             Channel.SendImage(img);
+        }
+
+        public void SendFile(LatticeFile file)
+        {
+            Channel.SendFile(file);
         }
     }
 }

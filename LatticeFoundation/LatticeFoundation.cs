@@ -34,6 +34,8 @@ namespace Fleet.Lattice
             var address = new Uri(String.Format("{0}://{1}/{2}", protocol, GetLocalHost(), servicename));
             var binding = new NetTcpBinding();
             binding.Security.Mode = SecurityMode.None;
+            binding.MaxReceivedMessageSize = 204003200;
+            binding.MaxBufferSize = 204003200;
 
             var host = new ServiceHost(typeof(LatticeServiceHost));
             host.AddServiceEndpoint(typeof(ILatticeService), binding, address);
@@ -45,6 +47,8 @@ namespace Fleet.Lattice
             var address = new EndpointAddress(String.Format("{0}://{1}/{2}", protocol, remotehost, servicename));
             var binding = new NetTcpBinding();
             binding.Security.Mode = SecurityMode.None;
+            binding.MaxReceivedMessageSize = 204003200;
+            binding.MaxBufferSize = 204003200;
 
             var client = new LatticeServiceClient(binding, address);
             return client;
@@ -58,6 +62,8 @@ namespace Fleet.Lattice
         {
             var address = new Uri(String.Format("net.pipe://localhost/{0}", pipename));
             var binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None);
+            binding.MaxReceivedMessageSize = 204003200;
+            binding.MaxBufferSize = 204003200;
 
             var host = new ServiceHost(typeof(LatticeIPCHost));
             host.AddServiceEndpoint(typeof(ILatticeIPC), binding, address);
@@ -68,6 +74,8 @@ namespace Fleet.Lattice
         {
             var address = new EndpointAddress(String.Format("net.pipe://locahost/{0}", pipename));
             var binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None);
+            binding.MaxReceivedMessageSize = 204003200;
+            binding.MaxBufferSize = 204003200;
 
             var client = new LatticeIPCClient(binding, address);
             return client;

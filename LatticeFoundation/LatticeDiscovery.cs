@@ -2,6 +2,7 @@
 using Mono.Zeroconf;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net;
 
 namespace Fleet.Lattice.Discovery
 {
@@ -104,10 +105,15 @@ namespace Fleet.Lattice.Discovery
 
             //var key = record.Hostname + ":" + record.Port;
 
-            lock (@lock)
+            Console.WriteLine("{0} != {1} ??", Dns.GetHostName(), record.ServiceName);
+
+            if (record.ServiceName != Dns.GetHostName())
             {
-                this.records[service] = record;
-            }
+                lock (@lock)
+                {
+                    this.records[service] = record;
+                }
+            } 
         }
 
         private void OnServiceRemoved(Object o, ServiceBrowseEventArgs args)

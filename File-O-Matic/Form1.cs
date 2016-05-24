@@ -4,6 +4,7 @@ using Fleet.Lattice.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Windows.Forms;
 
 namespace File_O_Matic
@@ -94,6 +95,8 @@ namespace File_O_Matic
 
             var file = new LatticeFile();
             file.FileContents = File.ReadAllBytes(this.fileLabel.Text);
+
+
            
             var components = this.fileLabel.Text.Split('\\');
             file.FileName = components[components.Length - 1];
